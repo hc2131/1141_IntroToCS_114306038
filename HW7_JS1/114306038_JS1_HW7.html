@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>1A2B Game</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #CEF2F0;
+            margin-top: 50px;
+        }
+        #record-area {
+            margin-top: 20px;
+            padding: 10px;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            min-height: 100px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>114306038_HW6_1A2B</h1>
+
+    <p>請輸入 4 個不重複的數字</p>
+    
+    <input type="text" id="guessInput">
+    <button onclick="play()">輸入</button>
+
+    <div id="record-area">
+        <strong>遊戲紀錄</strong><br>
+        <div id="logs"></div>
+    </div>
+
+    <script>
+       
+        var secretCode = generateAnswer(); 
+        var attempts = 0; 
+
+        function generateAnswer() {
+            var numList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            var result = "";
+
+            for (var i = 0; i < 4; i++) {
+                var index = Math.floor(Math.random() * numList.length);
+
+                result += numList[index];
+                numList.splice(index, 1);
+            }
+            return result;
+        }
+
+
+        function isValid(str) {
+        if (str.length !== 4) {
+            return false;
+        }
+
+        if (isNaN(str)) {
+            return false;
+        }
+
+           
+        if (str[0] == str[1] || str[0] == str[2] || str[0] == str[3] ||
+            str[1] == str[2] || str[1] == str[3] ||
+            str[2] == str[3]) {
+        return false;
+        }
+
+        return true;
+        }
+
+        function checkAB(guess, ans) {
+            var a = 0;
+            var b = 0;
+
+            var guessArr = guess.split("");
+            var ansArr = ans.split("");
+
+            for (var i = 0; i < 4; i++) {
+                if (guessArr[i] == ansArr[i]) {
+                    a++;
+                } 
+                else if (ans.includes(guessArr[i])) {
+                    b++;
+                }
+            }
+
+            return a + "A" + b + "B";
+        }
+
+        function play() {
+            var inputField = document.getElementById("guessInput");
+            var userGuess = inputField.value;
+
+            if (isValid(userGuess) == false) {
+                alert("請輸入4個不重複的數字");
+                inputField.value = "";
+                return; 
+            }
+
+            attempts++;
+
+            var resultAB = checkAB(userGuess, secretCode);
+
+            var logsDiv = document.getElementById("logs");
+            logsDiv.innerHTML += "第 " + attempts + " 次 - " + userGuess + " -> " + resultAB + "<br>";
+
+            if (resultAB == "4A0B") {
+                alert("恭喜答對！你總共猜了 " + attempts + " 次。");
+            }
+
+            inputField.value = "";
+        }
+
+    </script>
+</body>
+</html>
