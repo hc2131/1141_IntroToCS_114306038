@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Calculator</title>
+    <link rel="stylesheet" href="114306038_JS2_HW8.css">
+</head>
+<body>
+
+    <div class="card">
+        <h2>JS Calculator</h2>
+
+        <label>Number 1</label>
+        <input type="number" id="num1" placeholder="輸入數字">
+
+        <label>Number 2</label>
+        <input type="number" id="num2" placeholder="輸入數字">
+
+        <label>Operate way?</label>
+        <select id="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div id="result">Result = 0.00</div>
+    </div>
+
+    <script src="114306038_JS2_HW8.js"></script>
+</body>
+</html>

@@ -85,6 +85,7 @@
             var math = parseFloat(mathInput.value);
             var eng = parseFloat(englishInput.value);
 
+            // 這裡的檢查會擋下非數字的輸入
             if (isNaN(math) || isNaN(eng)) {
                 alert("Please enter numbers!");
                 return;
