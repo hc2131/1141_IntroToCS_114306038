@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Grade Statistics</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            margin: 20px; 
+            text-align: center; 
+        }
+
+        .input-box { 
+            margin-bottom: 20px; 
+        }
+
+        input { 
+            padding: 5px; 
+            text-align: center; 
+        }
+        
+        table { 
+            border-collapse: collapse; 
+            width: 600px; 
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            text-align: center; 
+        }
+
+        th, td { 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+        }
+
+        th { 
+            background-color: #f9f9f9; 
+        }
+        
+        tfoot { 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Grade Statistics</h1>
+
+    <div class="input-box">
+        <input type="text" id="mathInput" placeholder="Math">
+        <input type="text" id="englishInput" placeholder="English">
+        <button id="submitBtn">Submit</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Math</th>
+                <th>English</th>
+                <th>Average</th>
+            </tr>
+        </thead>
+        <tbody id="gradeBody">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Average</td>
+                <td id="avgMath">0.00</td>
+                <td id="avgEng">0.00</td>
+                <td id="avgTotal">0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        var mathInput = document.getElementById("mathInput");
+        var englishInput = document.getElementById("englishInput");
+        var submitBtn = document.getElementById("submitBtn");
+        var gradeBody = document.getElementById("gradeBody");
+        
+        var count = 0;
+
+        submitBtn.addEventListener("click", function() {
+            var math = parseFloat(mathInput.value);
+            var eng = parseFloat(englishInput.value);
+
+            if (isNaN(math) || isNaN(eng)) {
+                alert("Please enter numbers!");
+                return;
+            }
+
+            count = count + 1;
+            var rowAvg = (math + eng) / 2;
+
+            var newRow = "<tr>" +
+                "<td>" + count + "</td>" +
+                "<td class='math-score'>" + math + "</td>" +
+                "<td class='eng-score'>" + eng + "</td>" +
+                "<td>" + rowAvg.toFixed(2) + "</td>" +
+                "</tr>";
+
+            gradeBody.innerHTML += newRow;
+
+            mathInput.value = "";
+            englishInput.value = "";
+
+            updateColumnAverages();
+        });
+
+        function updateColumnAverages() {
+            var mathList = document.getElementsByClassName("math-score");
+            var engList = document.getElementsByClassName("eng-score");
+
+            var totalMath = 0;
+            var totalEng = 0;
+            var amount = mathList.length;
+
+            if (amount === 0) return;
+
+            for (var i = 0; i < amount; i++) {
+                totalMath = totalMath + parseFloat(mathList[i].innerHTML);
+                totalEng = totalEng + parseFloat(engList[i].innerHTML);
+            }
+
+            var finalMathAvg = totalMath / amount;
+            var finalEngAvg = totalEng / amount;
+            var finalTotalAvg = (finalMathAvg + finalEngAvg) / 2;
+
+            document.getElementById("avgMath").innerHTML = finalMathAvg.toFixed(2);
+            document.getElementById("avgEng").innerHTML = finalEngAvg.toFixed(2);
+            document.getElementById("avgTotal").innerHTML = finalTotalAvg.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
